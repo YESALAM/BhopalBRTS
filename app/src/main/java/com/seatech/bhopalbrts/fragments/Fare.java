@@ -267,7 +267,10 @@ public class Fare extends Fragment implements View.OnClickListener {
         }else if(ivto.getVisibility() == View.VISIBLE){
             Toast.makeText(context,"Destination not found",Toast.LENGTH_SHORT).show();
             return false ;
-        }else{
+        }else if(from.equalsIgnoreCase(to)){
+            Toast.makeText(context,"You are at destination already ",Toast.LENGTH_SHORT).show();
+            return false ;
+        }else {
             return true ;
         }
     }
