@@ -97,7 +97,7 @@ public class Fare extends Fragment implements View.OnClickListener {
         farerupee.setTypeface(Typeface.createFromAsset(getActivity().getAssets(), "Fonts/rupee.ttf"));
         farerupee.setText("`");
 
-        //dbManager = activity.getDbhelper() ;
+
         dbHelper = AssetDatabaseHelper.getDatabaseHelper(activity);
 
         String[] from = {"stop"};

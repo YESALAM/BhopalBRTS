@@ -164,7 +164,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
 
         switch (v.getId()){
             case R.id.gpsbutton :
-
+                com.google.android.gms.location.LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
                 manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
                 if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                     createGpsDisabledAlert();
@@ -215,21 +215,20 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
     public void getNearestStopList(double currentLatitude,double currentLongitude)  {
         dataset = new ArrayList<>();
         Cursor cursor1 = dbHelper.getMain();
-
-
         while (cursor1.moveToNext()){
-
+            Log.i(LOG_TAG,"Into while");
             float[] result = new float[1];
-            double  lst_lat = cursor1.getDouble(1);
-            double  lst_lng = cursor1.getDouble(2);
+            double  lst_lat = cursor1.getDouble(2);
+            double  lst_lng = cursor1.getDouble(1);
 
             Location.distanceBetween(currentLatitude, currentLongitude, lst_lat, lst_lng, result);
 
             double dist = result[0]/1000;
             String distpercise = String.format("%.2f",dist);
             float distance = Float.parseFloat(distpercise);
-
-            if(distance<2.0){
+            Log.i(LOG_TAG,"Dist is " + distance);
+            if(distance<3.0){
+                Log.e(LOG_TAG,"Minimum dist"+distance);
                 String stopname = cursor1.getString(0);
                 Stop temp = new Stop(stopname,distance);
                 dataset.add(temp);
@@ -246,6 +245,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
             double currentLatitude = location.getLatitude();
             double currentLongitude = location.getLongitude();
             dialog.dismiss();
+            Log.e(LOG_TAG,currentLatitude+"   "+currentLongitude);
             getNearestStopList(currentLatitude, currentLongitude);
             Collections.sort(dataset);
             String stopname = dataset.get(0).getStop();
@@ -276,7 +276,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(10); // Update location every second
 
-        com.google.android.gms.location.LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
     }
 
     @Override

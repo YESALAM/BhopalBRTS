@@ -30,10 +30,11 @@
             android:value="AIzaSyDNLDQ_KpH459_2zXNVoxbUbTwUoLrTJR0" />
 
         <activity
-            android:layout_below="@id/sliding_tabs"
+
             android:name=".Bhopal_BRTS"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
