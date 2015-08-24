@@ -3,6 +3,7 @@ package com.seatech.bhopalbrts.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -31,7 +33,8 @@ import java.util.ArrayList;
  */
 public class RouteMap extends Fragment{
     private final String LOG_TAG = RouteMap.class.getSimpleName() ;
-    MapView mapView;
+    MapView mapView ;
+    SupportMapFragment supportMapFragment ;
     GoogleMap map;
     ArrayList<Stop> stoplist;
     MarkerOptions[] optionses;
@@ -55,63 +58,46 @@ public class RouteMap extends Fragment{
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.menu_card_detail,menu);
+        inflater.inflate(R.menu.menu_card_detail, menu);
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
-
-        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
-        MapsInitializer.initialize(this.getActivity());
-        initializeMarker();
-        initializePolyline();
-        // Updates the location and zoom of the MapView
-        int mid = (stoplist.size())/2 ;
-        LatLng bhopal = new LatLng(stoplist.get(mid).getLattitude(), stoplist.get(mid).getLongitude());
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(bhopal, 12);
-        map.animateCamera(cameraUpdate);
-
-
-        for(int i=0 ;i<stoplist.size();i++){
-            markers[i] =  map.addMarker(optionses[i]);
-            if(i==0) markers[i].showInfoWindow();
-            if(junction_stop > 0 && i==junction_stop){
-                markers[i].showInfoWindow();
-            }
-
+        if(map==null){
+            map = supportMapFragment.getMap();
+            setupMap();
         }
 
-        for(int j=0;j< polylineOptionses.length;j++){
-            Polyline line = map.addPolyline(polylineOptionses[j]) ;
-            line.setColor(Color.GREEN);
-            line.setWidth(15);
-            if(junction_stop > 0){
-                junction_stop = 0 ;
-            } else {
-                line.setColor(Color.BLUE);
-                break;
-            }
-        }
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_route_map,container,false);
-
+        View v ;
+        //v = inflater.inflate(R.layout.fragment_route_map,container,false);
+        v = inflater.inflate(R.layout.fragment_route_map_legacy,container,false);
         // Gets the MapView from the XML layout and creates it
-        mapView = (MapView) v.findViewById(R.id.mapview);
-        mapView.onCreate(savedInstanceState);
-
+        //mapView = (MapView) v.findViewById(R.id.mapview);
+        // mapView.onCreate(savedInstanceState);
         // Gets to GoogleMap from the MapView and does initialization stuff
-        map = mapView.getMap();
+        //map = mapView.getMap();
 
         Log.e(LOG_TAG, getTag());
 
         return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        FragmentManager fm = getChildFragmentManager();
+        supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.legacy_map_container);
+        if (supportMapFragment == null) {
+            supportMapFragment = SupportMapFragment.newInstance();
+            fm.beginTransaction().replace(R.id.legacy_map_container, supportMapFragment).commit();
+        }
+
     }
 
     private void initializeMarker(){
@@ -165,20 +151,22 @@ public class RouteMap extends Fragment{
 
     @Override
     public void onResume() {
-        mapView.onResume();
+
+        //mapView.onResume();
+
         super.onResume();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mapView.onDestroy();
+        //mapView.onDestroy();
     }
 
     @Override
     public void onLowMemory() {
         super.onLowMemory();
-        mapView.onLowMemory();
+        //mapView.onLowMemory();
     }
 
 
@@ -187,6 +175,43 @@ public class RouteMap extends Fragment{
         LatLng bhopal = markers[position].getPosition();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(bhopal, 15);
         map.animateCamera(cameraUpdate);
+    }
+
+    private void setupMap(){
+        map.getUiSettings().setMyLocationButtonEnabled(true);
+        map.setMyLocationEnabled(true);
+
+        // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+        MapsInitializer.initialize(this.getActivity());
+        initializeMarker();
+        initializePolyline();
+        // Updates the location and zoom of the MapView
+        int mid = (stoplist.size())/2 ;
+        LatLng bhopal = new LatLng(stoplist.get(mid).getLattitude(), stoplist.get(mid).getLongitude());
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(bhopal, 12);
+        map.animateCamera(cameraUpdate);
+
+
+        for(int i=0 ;i<stoplist.size();i++){
+            markers[i] =  map.addMarker(optionses[i]);
+            if(i==0) markers[i].showInfoWindow();
+            if(junction_stop > 0 && i==junction_stop){
+                markers[i].showInfoWindow();
+            }
+
+        }
+
+        for(int j=0;j< polylineOptionses.length;j++){
+            Polyline line = map.addPolyline(polylineOptionses[j]) ;
+            line.setColor(Color.GREEN);
+            line.setWidth(15);
+            if(junction_stop > 0){
+                junction_stop = 0 ;
+            } else {
+                line.setColor(Color.BLUE);
+                break;
+            }
+        }
     }
 
 

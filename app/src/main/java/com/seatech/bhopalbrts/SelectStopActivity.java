@@ -50,6 +50,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
     LocationManager manager ;
     ArrayList<Stop> dataset;
     ProgressDialog dialog ;
+    boolean gps_clicked = false ;
 
     GoogleApiClient mGoogleApiClient ;
     LocationRequest mLocationRequest ;
@@ -65,7 +66,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_stop);
-        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        //this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
@@ -148,7 +149,15 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
     @Override
     protected void onStop() {
         super.onStop();
-        mGoogleApiClient.connect();
+        if(mGoogleApiClient.isConnected()){
+             mGoogleApiClient.disconnect();
+             manager.removeUpdates(this);
+            return;
+        }
+        if(gps_clicked){
+            manager.removeUpdates(this);
+        }
+
 
     }
 
@@ -164,6 +173,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
 
         switch (v.getId()){
             case R.id.gpsbutton :
+                gps_clicked = true ;
                 com.google.android.gms.location.LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
                 manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
                 if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){

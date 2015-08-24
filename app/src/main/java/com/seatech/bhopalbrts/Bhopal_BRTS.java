@@ -106,6 +106,12 @@ public class Bhopal_BRTS extends AppCompatActivity {
             Intent intent = new Intent(this,AboutDevloper.class);
             startActivity(intent);
             return true;
+        } else if(id== R.id.action_share){
+            Intent localIntent1 = new Intent();
+            localIntent1.setAction("android.intent.action.SEND");
+            localIntent1.putExtra("android.intent.extra.TEXT", "Bhopal BRTS is a must have app for MYBUS commuter and Bhopal tourist .\nJust click on the link given below:\nhttps://play.google.com/store/apps/details?id=com.seatech.bhopalbrts\n Don't forget to share with your mates..");
+            localIntent1.setType("text/plain");
+            startActivity(Intent.createChooser(localIntent1, "Share via:"));
         }
 
         return super.onOptionsItemSelected(item);

@@ -60,8 +60,13 @@ public class Calculator {
             for(int i=0;i<direct_buses.size();i++){
                 float int_distance = dataBaseHelper.getDistance(origin, destination, direct_buses.get(i));
                 float distance = Util.twoDigitPrecision(int_distance);
-                fare = calcFare(distance) ;
-                cardData[i] = new CardData(direct_buses.get(i), origin, destination,distance,fare);
+                String bus = direct_buses.get(i);
+                if(bus.equalsIgnoreCase("TR4AC")){
+                    fare = calcFareAc(distance) ;
+                } else {
+                    fare = calcFare(distance) ;
+                }
+                cardData[i] = new CardData(bus, origin, destination,distance,fare);
             }
             //Insert the array of cardData into ArrayList of CardData .
             ArrayList<CardData> list_of_cardData = new ArrayList<CardData>();
@@ -69,6 +74,9 @@ public class Calculator {
                 list_of_cardData.add(cardData[i]);
             }
 
+            Collections.sort(list_of_cardData);
+            fare = list_of_cardData.get(0).getFare() ;
+            route = list_of_cardData.get(0).getBuses();
             return list_of_cardData ;
 
         } else {
@@ -89,11 +97,21 @@ public class Calculator {
                         String connected_buses = bus_at_origin + " + " + bus_at_destination;
                         float integer_distance_junction = dataBaseHelper.getDistance(origin, junction, bus_at_origin);
                         float distance_of_juntion = Util.twoDigitPrecision(integer_distance_junction);
-                        int fare_till_junction = calcFare(distance_of_juntion);
+                        int fare_till_junction ;
+                        if(bus_at_origin.equalsIgnoreCase("TR4AC")){
+                            fare_till_junction = calcFareAc(distance_of_juntion);
+                        }else {
+                            fare_till_junction = calcFare(distance_of_juntion);
+                        }
 
                         float integer_distance_destination = dataBaseHelper.getDistance(junction, destination, bus_at_destination);
                         float distance_of_destination =Util.twoDigitPrecision(integer_distance_destination);
-                        int fare_till_destination = calcFare(distance_of_destination);
+                        int fare_till_destination ;
+                        if(bus_at_destination.equalsIgnoreCase("TR4AC")){
+                            fare_till_destination = calcFareAc(distance_of_destination);
+                        } else {
+                            fare_till_destination = calcFare(distance_of_destination);
+                        }
 
                         float total_distance = distance_of_juntion + distance_of_destination;
                         float total_fare = fare_till_junction + fare_till_destination;
@@ -109,11 +127,21 @@ public class Calculator {
                         String connected_buses = bus_at_origin + " + " + bus_at_destination;
                         float integer_distance_junction = dataBaseHelper.getDistance(origin, junction, bus_at_origin);
                         float distance_of_juntion = Util.twoDigitPrecision(integer_distance_junction);
-                        int fare_till_junction = calcFare(distance_of_juntion);
+                        int fare_till_junction ;
+                        if(bus_at_origin.equalsIgnoreCase("TR4AC")){
+                            fare_till_junction = calcFareAc(distance_of_juntion);
+                        }else {
+                            fare_till_junction = calcFare(distance_of_juntion);
+                        }
 
                         float integer_distance_destination = dataBaseHelper.getDistance(junction, destination, bus_at_destination);
                         float distance_of_destination =Util.twoDigitPrecision(integer_distance_destination);
-                        int fare_till_destination = calcFare(distance_of_destination);
+                        int fare_till_destination ;
+                        if(bus_at_destination.equalsIgnoreCase("TR4AC")){
+                            fare_till_destination = calcFareAc(distance_of_destination);
+                        } else {
+                            fare_till_destination = calcFare(distance_of_destination);
+                        }
 
                         float total_distance = distance_of_juntion + distance_of_destination;
                         float total_fare = fare_till_junction + fare_till_destination;
@@ -217,13 +245,14 @@ public class Calculator {
             return 12;
         } else if(distance<=10.0){
             return 14;
-        } else if (distance<=16.0){
+        } else if(distance<=13.0){
             return 17;
-        } else if (distance<=19.0){
+        } else if (distance<=16.0){
             return 19;
+        } else if (distance<=19.0){
+            return 22;
         } else if (distance<=22.0){
             return 24;
-
         } else if(distance<=25.0){
             return 26;
         } else if (distance<=28.0){
@@ -231,7 +260,36 @@ public class Calculator {
         } else if (distance<= 30.0){
             return 30;
         } else if(distance<=34.0){
-            return 34;
+            return 32;
+        }
+        return 0;
+    }
+
+    private int calcFareAc(float distance){
+        if(distance<=2.0){
+            return 7;
+        } else if(distance<=3.0){
+            return 12;
+        } else if(distance<=7.0){
+            return 15;
+        } else if(distance<=10.0){
+            return 17;
+        }else if(distance<=13.0){
+            return 20;
+        } else if (distance<=16.0){
+            return 22;
+        } else if (distance<=19.0){
+            return 25;
+        } else if (distance<=22.0){
+            return 27;
+        } else if(distance<=25.0){
+            return 29;
+        } else if (distance<=28.0){
+            return 31;
+        } else if (distance<= 30.0){
+            return 33;
+        } else if(distance<=34.0){
+            return 35;
         }
         return 0;
     }

@@ -52,7 +52,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="version 1.00 (Naina)"
+                android:text="version 1.1 (Naina)"
                 android:gravity="center_horizontal"
                 />
             <TextView
