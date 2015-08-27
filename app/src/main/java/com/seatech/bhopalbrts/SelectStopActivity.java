@@ -151,7 +151,6 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
         super.onStop();
         if(mGoogleApiClient.isConnected()){
              mGoogleApiClient.disconnect();
-             manager.removeUpdates(this);
             return;
         }
         if(gps_clicked){

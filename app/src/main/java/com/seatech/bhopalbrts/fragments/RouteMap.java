@@ -66,7 +66,10 @@ public class RouteMap extends Fragment{
         super.onStart();
         if(map==null){
             map = supportMapFragment.getMap();
-            setupMap();
+           // Log.e(LOG_TAG,map.toString());
+           if(map!=null){
+               setupMap();
+           }
         }
 
 
