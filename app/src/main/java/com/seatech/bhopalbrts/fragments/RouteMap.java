@@ -16,6 +16,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -31,9 +32,9 @@ import java.util.ArrayList;
 /**
  * Created by yesalam on 22-08-2015.
  */
-public class RouteMap extends Fragment{
+public class RouteMap extends Fragment implements OnMapReadyCallback {
     private final String LOG_TAG = RouteMap.class.getSimpleName() ;
-    MapView mapView ;
+    //MapView mapView ;
     SupportMapFragment supportMapFragment ;
     GoogleMap map;
     ArrayList<Stop> stoplist;
@@ -65,14 +66,13 @@ public class RouteMap extends Fragment{
     public void onStart() {
         super.onStart();
         if(map==null){
-            map = supportMapFragment.getMap();
+            //map = supportMapFragment.getMap();
            // Log.e(LOG_TAG,map.toString());
-           if(map!=null){
+            supportMapFragment.getMapAsync(this);
+           /*if(map!=null){
                setupMap();
-           }
+           }*/
         }
-
-
     }
 
     @Override
@@ -218,5 +218,9 @@ public class RouteMap extends Fragment{
     }
 
 
-
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap ;
+        setupMap();
+    }
 }
