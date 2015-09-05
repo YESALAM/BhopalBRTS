@@ -1,6 +1,7 @@
 package com.seatech.bhopalbrts.fragments;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -64,6 +65,7 @@ public class RouteMap extends Fragment implements OnMapReadyCallback {
 
     @Override
     public void onStart() {
+        Log.e(LOG_TAG,"onStart called");
         super.onStart();
         if(map==null){
             //map = supportMapFragment.getMap();
@@ -73,6 +75,7 @@ public class RouteMap extends Fragment implements OnMapReadyCallback {
                setupMap();
            }*/
         }
+        Log.e(LOG_TAG,"onStart finished");
     }
 
     @Override
@@ -97,10 +100,11 @@ public class RouteMap extends Fragment implements OnMapReadyCallback {
         FragmentManager fm = getChildFragmentManager();
         supportMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.legacy_map_container);
         if (supportMapFragment == null) {
+            Log.e(LOG_TAG,"Didnt find fragment");
             supportMapFragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.legacy_map_container, supportMapFragment).commit();
         }
-
+        Log.e(LOG_TAG,"onActivityCreated finished");
     }
 
     private void initializeMarker(){
@@ -181,13 +185,19 @@ public class RouteMap extends Fragment implements OnMapReadyCallback {
     }
 
     private void setupMap(){
-        map.getUiSettings().setMyLocationButtonEnabled(true);
-        map.setMyLocationEnabled(true);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            // only for gingerbread and newer versions
+            map.getUiSettings().setMyLocationButtonEnabled(true);
+            map.setMyLocationEnabled(true);
+        }
+
 
         // Needs to call MapsInitializer before doing any CameraUpdateFactory calls
         MapsInitializer.initialize(this.getActivity());
+
         initializeMarker();
         initializePolyline();
+
         // Updates the location and zoom of the MapView
         int mid = (stoplist.size())/2 ;
         LatLng bhopal = new LatLng(stoplist.get(mid).getLattitude(), stoplist.get(mid).getLongitude());
@@ -215,6 +225,8 @@ public class RouteMap extends Fragment implements OnMapReadyCallback {
                 break;
             }
         }
+
+
     }
 
 

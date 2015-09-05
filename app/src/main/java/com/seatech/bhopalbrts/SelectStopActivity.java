@@ -9,6 +9,7 @@ import android.database.Cursor;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -17,12 +18,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -31,7 +32,7 @@ import com.google.android.gms.location.LocationServices;
 import com.seatech.bhopalbrts.datamodel.Stop;
 import com.seatech.bhopalbrts.util.AssetDatabaseHelper;
 
-import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -151,7 +152,6 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
         super.onStop();
         if(mGoogleApiClient.isConnected()){
              mGoogleApiClient.disconnect();
-            return;
         }
         if(gps_clicked){
             manager.removeUpdates(this);
@@ -173,7 +173,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
         switch (v.getId()){
             case R.id.gpsbutton :
                 gps_clicked = true ;
-                com.google.android.gms.location.LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+
                 manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
                 if(!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                     createGpsDisabledAlert();
@@ -184,7 +184,9 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
                 dialog.setCanceledOnTouchOutside(false);
                 dialog.show();
                 if(mGoogleApiClient.isConnected()){
-                    LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+                    if(android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN){
+                        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,mLocationRequest,this);
+                    }
                 }
                 manager.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,this);
                 break;
@@ -257,8 +259,13 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
             Log.e(LOG_TAG,currentLatitude+"   "+currentLongitude);
             getNearestStopList(currentLatitude, currentLongitude);
             Collections.sort(dataset);
-            String stopname = dataset.get(0).getStop();
-            finishThis(stopname);
+            if(dataset.size()>0){
+                String stopname = dataset.get(0).getStop();
+                finishThis(stopname);
+            } else {
+                Log.i(LOG_TAG,"Location is "+currentLatitude+" "+currentLongitude);
+                Toast.makeText(this,"NO Stop Found",Toast.LENGTH_SHORT).show();
+            }
             manager.removeUpdates(this);
         }
 
@@ -281,6 +288,7 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
 
     @Override
     public void onConnected(Bundle bundle) {
+
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         mLocationRequest.setInterval(10); // Update location every second
@@ -290,6 +298,12 @@ public class SelectStopActivity extends AppCompatActivity implements TextWatcher
 
     @Override
     public void onConnectionSuspended(int i) {
+        if(i== GoogleApiClient.ConnectionCallbacks.CAUSE_NETWORK_LOST){
+            Toast.makeText(this,"Network Lost",Toast.LENGTH_SHORT).show();
+        }
+        if(i== GoogleApiClient.ConnectionCallbacks.CAUSE_SERVICE_DISCONNECTED){
+            Toast.makeText(this,"Service disconnected",Toast.LENGTH_SHORT).show();
+        }
         Log.i(LOG_TAG, "GoogleApiClient connection has been suspend");
     }
 

@@ -40,21 +40,43 @@
 
                 android:textSize="18sp"
                 />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Bhopal BRTS"
-                android:textSize="35dp"
-                android:textColor="@android:color/primary_text_light_nodisable"
-                android:gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="version 1.1 (Naina)"
-                android:gravity="center_horizontal"
-                />
+
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_gravity="center_horizontal"
+               android:paddingLeft="20dp"
+               android:layout_marginTop="10dp"
+               >
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/ic_launcher"
+                   android:id="@+id/bus_icon"
+                   />
+
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/app_name"
+                   android:text="Bhopal BRTS"
+                   android:textSize="35dp"
+                   android:textColor="@android:color/primary_text_light_nodisable"
+                   android:layout_toRightOf="@id/bus_icon"
+                   />
+               <TextView
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:text="version 1.1.1 (Naina)"
+                   android:gravity="center_horizontal"
+                   android:layout_below="@+id/app_name"
+                   />
+
+
+           </RelativeLayout>
+
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

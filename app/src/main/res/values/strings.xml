@@ -26,6 +26,9 @@
     <string name="rs">\u20A8</string>
     <string name="title_activity_about_brts">About BRTS</string>
     <string name="title_activity_about_devloper">About Devlopers</string>
+    <string name="action_share">Share App</string>
+    <string name="local_police">tel:100</string>
+    <string name="about_us_detail">We are group of  students with common motive to solve common problem with the help of technology (Praudyogiki aka Jugad) available .  </string>
     <string name="bhopal_brts_detail">
         <![CDATA[
             <p><strong>BHOPAL,</strong> the capital of Madhya Pradesh, is a fascinating  amalgamation of scenic beauty, old historic flavor and modern urban planning.  It is also known as the “City of Lakes”. Today Bhopal has blossomed into a  city, which in spite of being modern, upholds the patrician mark of its bygone  rulers.  </p>
@@ -33,48 +36,55 @@
         ]]>
     </string>
     <string name="brts_office"><![CDATA[
-<p><b>Bhopal City Link Ltd.</b><br>
-2nd Floor, Harshwardhan Complex,<br>
-Mata Mandir Square, T.T. Nagar,<br>
-<strong>Bhopal (MP) 462003<br>
-OR CALL US:</strong> +91 755-4074843<br>
-<strong>EMAIL US:</strong> <a href="mailto:bcll_bpl@rediffmail.com" target="_blank">bcll_bpl@rediffmail.rediffmailcom</a></p>
+        <p><b>Bhopal City Link Ltd.</b><br>
+        2nd Floor, Harshwardhan Complex,<br>
+        Mata Mandir Square, T.T. Nagar,<br>
+        <strong>Bhopal (MP) 462003<br>
+        OR CALL US:</strong> +91 755-4074843<br>
+        <strong>EMAIL US:</strong> <a href="mailto:bcll_bpl@rediffmail.com" target="_blank">bcll_bpl@rediffmail.com</a></p>
     ]]></string>
-    <string name="about_us_detail">We are group of  students with common motive to solve common problem with the help of technology (Praudyogiki aka Jugad) available .  </string>
+
     <string name="about_app_detail"><![CDATA[
-      <p>Credited as one of the first full feature bus information application in the city , <b>Bhopal BRTS</b> serves you with a well organised information regarding the city bus services in the capital.</p>
-      <p>Theme of the app is the Theme of this beautiful city . <b>Clean and Green</b> . By use of <b>BRTS</b> not just we are solving the traffic problem but also helping to nature by controlled pollution .</p>
-      <p>Treating the need of improvement as a gospel, we welcome your feedback ans suggestions and are obliged to update you with the most recent alterations .</p>
+        <p>Credited as one of the first full feature bus information application in the city , <b>Bhopal BRTS</b> serves you with a well organised information regarding the city bus services in the capital.</p>
+        <p>Theme of the app is the Theme of this beautiful city . <b>Clean and Green</b> . By use of <b>BRTS</b> not just we are solving the traffic problem but also helping to nature by controlled pollution .</p>
+        <p>Treating the need of improvement as a gospel, we welcome your feedback ans suggestions and are obliged to update you with the most recent alterations .</p>
     ]]>
     </string>
     <string name="contact_us_detail"><![CDATA[
-    <p> Phone       :  +918982384594 <br>
+
+        Web         :  <a href="http://seatech.me">seatech.me</a><br>
+        Email       :  <a href="mailto:reach2seatech@gmail.com" target="_blank">reach2seatech@gmail.com</a><br>
+        Facebook    :  <a href="http://fb.com/bhopalbrts" >fb.com/bhopalbrts </a>
+
+
+    ]]></string>
+
+    <string name="tandc"><![CDATA[
+        <p>The data and specifications mentioned in here are based on information provided by Google Search and BRTS. We share no terms or alliance with My Bus or Bhopal Municipal Corp.</p>
+        <p>The data in real time is subject to change. We did our best to compile recent and most accurate data; will be held responsible in no case regarding on spot data changes. Updates for data will be distributed within 2-3 days after the alterations by My Bus.</p>
+        <p> Your access to and use of this service is bound by the acceptance and compliance of these terms. These terms apply to all visitors, users and other who use or access the service.</p>
+        <p>Termination:<br>
+        We may terminate the service anytime, without any notice, with no reason whatsoever if found breaching of the above terms.</p>
+    ]]></string>
+
+    <string name="thank"><![CDATA[
+
+        <p>College Institution for encouragement to implement ideas.</p>
+        <p>Google and My Bus for providing data required.</p>
+        <p>Udacity for providing tutorial support.</p>
+        <p>Municipal Corp. Bhopal for provoking the “Clean and Green Theme”.</p>
+        <p>Special thanks to the mentors, parents and supporters for guidance, allowance, permissions and resources.</p>
+        <p>Shivam Nema, Aditya Upadhyaay , Sanjiv Singh and Varun Singh for testing and contributions.</p>
+        <p>Varun Singh for feedback on  Icons.</p>
+        <p>Thank you users!</p>
+    ]]></string>
+    <string name="contact_alam_detail"><![CDATA[
+            <p>
+        Phone       :  +918982384594 <br>
         Email       :  <a href="mailto:itisalam@gmail.com" target="_blank">itisalam@gmail.com</a><br>
         Facebook    :  <a href="http://fb.com/sadarealam786" >fb.com/sadarealam786 </a><br>
         Twitter     :  <a href="http://twitter.com/nextisalam">twitter.com/nextisalam</a><br>
+        </p>
     ]]></string>
-    <string name="local_police">tel:100</string>
-    <string name="tandc"><![CDATA[
-    <p>The data and specifications mentioned in here are based on information provided by Google Search and BRTS. We share no terms or alliance with My Bus or Bhopal Municipal Corp.</p>
-    <p>The data in real time is subject to change. We did our best to compile recent and most accurate data; will be held responsible in no case regarding on spot data changes. Updates for data will be distributed within 2-3 days after the alterations by My Bus.</p>
-   <p> Your access to and use of this service is bound by the acceptance and compliance of these terms. These terms apply to all visitors, users and other who use or access the service.</p>
-    <p>Termination:<br>
-    We may terminate the service anytime, without any notice, with no reason whatsoever if found breaching of the above terms.</p>
-    ]]>
-</string>
-    <string name="thank"><![CDATA[
-
-<p>College Institution for encouragement to implement ideas.</p>
-<p>Google and My Bus for providing data required.</p>
-<p>Udacity for providing tutorial support.</p>
-<p>Municipal Corp. Bhopal for provoking the “Clean and Green Theme”.</p>
-<p>Special thanks to the mentors, parents and supporters for guidance, allowance, permissions and resources.</p>
-<p>Shivam Nema, Aditya Upadhyaay and Varun Singh for testing and contributions.</p>
-<p>Varun Singh for creating Icons.</p>
-<p>Thank you users!</p>
-
-    ]]></string>
-
-<string name="action_share">Share App</string>
 
 </resources>

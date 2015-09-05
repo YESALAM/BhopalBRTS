@@ -17,6 +17,7 @@ import com.seatech.bhopalbrts.R;
  */
 public class ContactUs extends Fragment {
     TextView contact_detail;
+    TextView contact_alam ;
 
     @Override
     public void onStart() {
@@ -34,7 +35,10 @@ public class ContactUs extends Fragment {
     private void iniialize(){
         View root = getView();
         contact_detail = (TextView) root.findViewById(R.id.contact_us_detail);
+        contact_alam = (TextView) root.findViewById(R.id.contact_alam_detail);
         contact_detail.setText(Html.fromHtml(getString(R.string.contact_us_detail)));
+        contact_alam.setText(Html.fromHtml(getString(R.string.contact_alam_detail)));
         contact_detail.setMovementMethod(LinkMovementMethod.getInstance());
+        contact_alam.setMovementMethod(LinkMovementMethod.getInstance());
     }
 }

@@ -38,10 +38,8 @@
                     <TextView
                         android:text="Telephone"
                         android:textSize="20sp"
-
                         android:gravity="right"
-                        android:padding="3dip"
-                        android:paddingRight="15dp"
+                        android:paddingRight="5dp"
                         />
                 </TableRow>
 
@@ -49,7 +47,6 @@
                     <TextView
                         android:layout_column="1"
                         android:text="Local Police"
-
                         style="@style/table_row"
                         />
                     <TextView
